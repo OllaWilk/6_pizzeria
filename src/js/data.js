@@ -32,7 +32,7 @@ dataSource.products = {
     },
   },
   pizza: {
-    name: 'Nonna Alba\'s Pizza',
+    name: 'Nonna Alba\'s Pizza pizza.name',
     price: 20,
     description: 'The true taste of Italy &ndash; homemade pizza as prepared by our grandmothers in old-fashoned brick ovens. Choose your favorite topping and enjoy your comfort food! All ingredients come straight from eco-friendly, trusted farms in the Italian countryside.',
     images: [
