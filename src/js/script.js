@@ -332,6 +332,9 @@
       thisCart.dom.toggleTrigger.addEventListener('click', () => thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive));
 
       thisCart.dom.productList.addEventListener('updated', () => thisCart.update());
+
+      thisCart.dom.productList.addEventListener('remove', event => thisCart.remove(event.detail.cartProduct));
+
     }
 
     add(menuProduct) {
@@ -366,6 +369,20 @@
         }
       }
     }
+
+    remove(cartProduct) {
+      const thisCart = this;
+
+      const index = thisCart.products[cartProduct];
+      console.log('index', index);
+
+      const delElement = thisCart.products.splice(cartProduct, 1);
+      console.log(delElement);
+
+      cartProduct.dom.wrapper.remove();
+
+      thisCart.update();
+    }
   }
 
   class CartProduct {
@@ -382,7 +399,7 @@
 
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
-
+      thisCartProduct.initActions();
     }
 
     getElements(element) {
@@ -413,13 +430,25 @@
     initActions() {
       const thisCartProduct = this;
 
-      thisCartProduct.dom.edit.addEventListener('click', function(event) {
-        event.preventDefault();
-      });
-      thisCartProduct.dom.remove.addEventListener('click', function(event) {
+      thisCartProduct.dom.edit.addEventListener('click', event => event.preventDefault()); //TO DO finish edit button
+      thisCartProduct.dom.remove.addEventListener('click', (event)=>{
         event.preventDefault();
         thisCartProduct.remove();
       });
+    }
+
+    remove() {
+      const thisCartProduct = this;
+
+      const event = new CustomEvent('remove', {
+        bubbles: true,
+        detail: {
+          cartProduct: thisCartProduct,
+        }
+      });
+
+      thisCartProduct.dom.wrapper.dispatchEvent(event);
+
     }
   }
 
