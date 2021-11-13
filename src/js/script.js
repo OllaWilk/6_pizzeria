@@ -373,7 +373,7 @@
     remove(cartProduct) {
       const thisCart = this;
 
-      const index = thisCart.products[cartProduct];
+      const index = thisCart.products.indexOf(cartProduct);
       console.log('index', index);
 
       const delElement = thisCart.products.splice(cartProduct, 1);
@@ -405,8 +405,8 @@
     getElements(element) {
       const thisCartProduct = this;
 
-      // thisCartProduct.dom = [];
-      thisCartProduct.dom = {};
+      thisCartProduct.dom = [];
+      // thisCartProduct.dom = {};
 
       thisCartProduct.dom.wrapper = element;
       thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);

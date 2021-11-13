@@ -35,7 +35,7 @@ utils.serializeFormToObject = function(form){
   }
   return output;
 };
-
+//konwertuje obiekt dataSource do JSONA.
 utils.convertDataSourceToDbJson = function(){
   const productJson = [];
   for(let key in dataSource.products){
