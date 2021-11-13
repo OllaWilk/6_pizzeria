@@ -263,7 +263,9 @@
     announce() {
       const thisWidget = this;
 
-      const event = new Event('updated');
+      const event = new CustomEvent('updated', {
+        bubbles: true
+      });
       thisWidget.element.dispatchEvent(event);
     }
 
@@ -328,6 +330,8 @@
     initActions() {
       const thisCart = this;
       thisCart.dom.toggleTrigger.addEventListener('click', () => thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive));
+
+      thisCart.dom.productList.addEventListener('updated', () => thisCart.update());
     }
 
     add(menuProduct) {
@@ -355,9 +359,6 @@
         thisCart.totalNumber += product.amount;
       }
       thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
-      console.log('totalNumber', thisCart.totalNumber);
-      console.log('subtotalPrice', thisCart.subtotalPrice);
-      console.log('thisCart.totalPrice', thisCart.totalPrice);
 
       for (let key of thisCart.renderTotalsKeys) {
         for (let elem of thisCart.dom[key]) {
