@@ -312,7 +312,7 @@
 
       thisCart.getElements(element);
       thisCart.initActions();
-      // thisCart.update();
+      thisCart.update();
     }
 
     getElements(element) {
@@ -325,6 +325,9 @@
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
       thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
+      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
+
 
       thisCart.renderTotalsKeys = ['totalNumber', 'totalPrice', 'subtotalPrice', 'deliveryFee'];
 
@@ -353,9 +356,18 @@
       const url = settings.db.url + '/' + settings.db.order;
 
       const payload = {
-        address: 'test',
+        phone: thisCart.dom.phone.value,
+        address: thisCart.dom.address.value,
         totalPrice: thisCart.totalPrice,
+        totalNumber: thisCart.totalNumber ,
+        subtotalPrice: thisCart.subtotalPrice ,
+        deliveryFee: thisCart.deliveryFee,
+        products: [],
       };
+
+      for (let product of thisCart.products) {
+        payload.products.push(product.getData());
+      }
 
       const options = {
         method: 'POST',
@@ -486,6 +498,21 @@
 
       thisCartProduct.dom.wrapper.dispatchEvent(event);
 
+    }
+
+    getData() {
+      const thisCartProduct = this;
+
+      const productAddedData = {
+        productInfo: {
+          id: thisCartProduct.id,
+          amount: thisCartProduct.amount,
+          price: thisCartProduct.price,
+          priceSingle: thisCartProduct.priceSingle,
+          params: thisCartProduct.params,
+        }
+      };
+      return productAddedData;
     }
   }
 
