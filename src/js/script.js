@@ -324,6 +324,7 @@
 
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
 
       thisCart.renderTotalsKeys = ['totalNumber', 'totalPrice', 'subtotalPrice', 'deliveryFee'];
 
@@ -340,6 +341,37 @@
 
       thisCart.dom.productList.addEventListener('remove', event => thisCart.remove(event.detail.cartProduct));
 
+      thisCart.dom.form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        thisCart.sendOrder();
+      });
+    }
+
+    sendOrder() {
+      const thisCart = this;
+
+      const url = settings.db.url + '/' + settings.db.order;
+
+      const payload = {
+        address: 'test',
+        totalPrice: thisCart.totalPrice,
+      };
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+
+      fetch(url, options)
+        .then((response) => {
+          return response.json();
+        })
+        .then((parsedResponse) => {
+          console.log('parseResponse', parsedResponse);
+        });
     }
 
     add(menuProduct) {
