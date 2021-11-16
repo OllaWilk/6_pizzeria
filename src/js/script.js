@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
-
+// import Booking from './components/Booking';
 {
   'use strict';
 
@@ -563,7 +563,45 @@
     }
   }
 
+  class Booking {
+    constructor(bookingReservation) {
+      const thisBooking = this;
+
+      thisBooking.render(bookingReservation);
+      thisBooking.initWidgets();
+    }
+
+    render(element) {
+      const thisBooking = this;
+
+      const generatedHTML = templates.bookingWidget();
+
+      thisBooking.dom = {};
+      thisBooking.dom.wrapper = element;
+      thisBooking.dom.wrapper.innerHTML = generatedHTML;
+      thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount);
+      thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
+
+    }
+
+    initWidgets() {
+      const thisBooking = this;
+
+      thisBooking.peopleAmount = new AmountWidget(thisBooking.dom.peopleAmount);
+      thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount);
+    }
+  }
+
   const app = {
+
+    initBooking: function () {
+      const thisApp = this;
+
+      const bookingReservation = document.querySelector(select.containerOf.booking);
+      thisApp.booking = new Booking(bookingReservation);
+
+    },
+
     initPages: function () {
       const thisApp = this;
 
@@ -656,6 +694,7 @@
       thisApp.initPages();
       thisApp.initData();
       thisApp.initCart();
+      thisApp.initBooking();
     },
   };
 
