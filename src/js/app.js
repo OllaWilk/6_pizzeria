@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
+
+
 // import Booking from './components/Booking';
 {
   'use strict';
@@ -676,6 +678,7 @@
       thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount);
       thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
       thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
+      thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
 
     }
 
@@ -685,10 +688,50 @@
       thisBooking.peopleAmount = new AmountWidget(thisBooking.dom.peopleAmount);
       thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount);
 
-      thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);      //
+      thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
+      thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
     }
   }
 
+  class HourPicker extends BaseWidget {
+    constructor(wrapper) {
+      super(wrapper, settings.hours.open);
+
+      const thisWidget = this;
+
+      thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.hourPicker.input);
+      thisWidget.dom.output = thisWidget.dom.wrapper.querySelector(select.widgets.hourPicker.output);
+
+      thisWidget.initPlugin();
+      thisWidget.value = thisWidget.dom.input.value;
+    }
+
+    initPlugin() {
+      const thisWidget = this;
+      // eslint-disable-next-line no-undef
+      rangeSlider.create(thisWidget.dom.input);
+
+      thisWidget.dom.input.addEventListener('input', function() {
+        thisWidget.value = thisWidget.dom.input.value;
+      });
+
+    }
+
+    parseValue(value) {
+      const hour = utils.numberToHour(value);
+      return hour;
+    }
+
+    isValid() {
+      return true;
+    }
+
+    renderValue(){
+      const thisWidget = this;
+
+      thisWidget.dom.output.innerHTML = thisWidget.value;
+    }
+  }
 
 
   const app = {
