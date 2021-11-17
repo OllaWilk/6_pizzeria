@@ -131,7 +131,6 @@
     bookingWidget: Handlebars.compile(document.querySelector(select.templateOf.bookingWidget).innerHTML),
   };
 
-
   class Product {
     constructor(id, data) {
       const thisProduct = this;
@@ -379,7 +378,7 @@
 
     renderValue() {
       const thisWidget = this;
-      thisWidget.dom.input.value = thisWidget.value; //BLAD
+      thisWidget.dom.input.value = thisWidget.value;
     }
 
     initActions() {
@@ -394,6 +393,54 @@
         event.preventDefault();
         thisWidget.setValue(thisWidget.value + 1);
       });
+    }
+  }
+
+  class DatePicker extends BaseWidget {
+    constructor(wrapper) {
+      super(wrapper, utils.dateToStr(new Date()));
+      const thisWidget = this;
+
+      thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.datePicker.input);
+
+      thisWidget.initPlugin();
+    }
+
+    initPlugin() {
+      const thisWidget = this;
+
+      thisWidget.minDate = new Date(thisWidget.value);
+      thisWidget.maxDate = utils.addDays(thisWidget.minDate, settings.datePicker.maxDaysInFuture);
+
+      const options = {
+        defaultDate: thisWidget.minDate,
+        minDate: thisWidget.minDate,
+        maxDate: thisWidget.maxDate,
+        disable: [
+          function(date) {
+            return(date.getDay() === 1);
+          }
+        ],
+        locale: {
+          firstDayOfWeek: 1
+        },
+        onChange: function(selectedDates, dateStr) {
+          thisWidget.value = dateStr;
+        }
+      };
+      // eslint-disable-next-line no-undef
+      flatpickr(thisWidget.dom.input,options);
+
+    }
+    parseValue(value) {
+      return value;
+    }
+
+    isValid(value){
+      return value;
+    }
+    renderValue() {
+      console.log();
     }
   }
 
@@ -628,6 +675,7 @@
       thisBooking.dom.wrapper.innerHTML = generatedHTML;
       thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount);
       thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
+      thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
 
     }
 
@@ -636,6 +684,8 @@
 
       thisBooking.peopleAmount = new AmountWidget(thisBooking.dom.peopleAmount);
       thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount);
+
+      thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);      //
     }
   }
 
