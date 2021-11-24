@@ -96,7 +96,7 @@ class Cart {
 
     thisCart.products.splice(0);
 
-    thisCart.dom.productList.remove();
+    thisCart.dom.productList.innerHTML = '';
 
     thisCart.dom.phone.value = '';
     thisCart.dom.address.value = '';
