@@ -489,7 +489,13 @@
 
       thisCart.dom.form.addEventListener('submit', (event) => {
         event.preventDefault();
-        thisCart.sendOrder();
+
+        if (this.products.length === 0) {
+          alert('Your cart is empty');
+        } else {
+          thisCart.sendOrder();
+          thisCart.empty();
+        }
       });
     }
 
@@ -527,6 +533,19 @@
         .then((parsedResponse) => {
           console.log('parseResponse', parsedResponse);
         });
+    }
+
+    empty() {
+      const thisCart = this;
+
+      thisCart.products.splice(0);
+
+      thisCart.dom.productList.remove();
+
+      thisCart.dom.phone.value = '';
+      thisCart.dom.address.value = '';
+
+      thisCart.update();
     }
 
     add(menuProduct) {
