@@ -1,6 +1,6 @@
 import {settings, select} from './../settings.js';
-import {utils} from './../utils';
-import BaseWidget from './BaseWidget';
+import {utils} from './../utils.js';
+import BaseWidget from './BaseWidget.js';
 
 class HourPicker extends BaseWidget {
   constructor(wrapper) {
