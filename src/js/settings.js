@@ -80,6 +80,7 @@ export const classNames = {
   booking: {
     loading: 'loading',
     tableBooked: 'booked',
+    selectedTable: 'pick-table',
   },
   nav: {
     active: 'active',

@@ -13,7 +13,7 @@ const app = {
     const idFromHash = window.location.hash.replace('#/', '');
 
     let pageMatchingHash = thisApp.pages[0].id;
-    console.log('pageMatchingHash', pageMatchingHash);
+    // console.log('pageMatchingHash', pageMatchingHash);
 
     for (let page of thisApp.pages) {
       if (page.id === idFromHash) {
@@ -83,7 +83,7 @@ const app = {
         /* execute initMenu method*/
         thisApp.initMenu();
       });
-    console.log('thisApp.data JSON stringify', JSON.stringify(thisApp.data));
+    // console.log('thisApp.data JSON stringify', JSON.stringify(thisApp.data));
   },
   initCart: function () {
     const thisApp = this;
