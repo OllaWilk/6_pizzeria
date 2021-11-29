@@ -61,8 +61,14 @@ export const select = {
   },
   booking: {
     peopleAmount: '.people-amount',
+    peopleAmountInput: '[name="people"]',
     hoursAmount: '.hours-amount',
+    hourAmountInput: '[name="hours"]',
     tables: '.floor-plan .table',
+    starters: '[name="starter"]',
+    addressInput: '[name="address"]',
+    phoneInput: '[name="phone"]',
+    submitForm: '[type="submit"]',
   },
   nav: {
     links: '.main-nav a',
