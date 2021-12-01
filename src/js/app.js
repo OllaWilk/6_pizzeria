@@ -8,21 +8,21 @@ const app = {
     const thisApp = this;
 
     thisApp.pages = document.querySelector(select.containerOf.pages).children;
+
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
     const idFromHash = window.location.hash.replace('#/', '');
 
     let pageMatchingHash = thisApp.pages[0].id;
-    console.log('pageMatchingHash', pageMatchingHash);
 
     for (let page of thisApp.pages) {
-      if (page.id === idFromHash) {
+      if (page.id == idFromHash) {
         pageMatchingHash = page.id;
         break;
       }
     }
 
-    thisApp.activatePage(idFromHash);
+    thisApp.activatePage(pageMatchingHash);
 
     for (let link of thisApp.navLinks) {
       link.addEventListener('click', function (event) {
