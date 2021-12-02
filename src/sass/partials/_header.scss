@@ -13,6 +13,15 @@
   display: inline-block;
   line-height: 1;
 
+  a {
+    color: $color-light;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   &__title {
     margin: 0 0 $base-size 0;
     font-size: ($base-size * 4);
@@ -39,7 +48,7 @@
   position: absolute;
   @include flex(row, flex-start, flex-start);
   bottom: ($base-size * -8);
-  // display: none;
+  display: none;
 
   a {
     @extend .h2;

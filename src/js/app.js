@@ -11,12 +11,17 @@ const app = {
 
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
+    thisApp.mainLinks = document.querySelectorAll(select.nav.mainLinks);
+    thisApp.logoLink = document.querySelector(select.nav.logoLink);
+    thisApp.mainNav = document.querySelector(select.nav.mainNav);
+
+
     const idFromHash = window.location.hash.replace('#/', '');
 
     let pageMatchingHash = thisApp.pages[0].id;
 
     for (let page of thisApp.pages) {
-      if (page.id == idFromHash) {
+      if (page.id === idFromHash) {
         pageMatchingHash = page.id;
         break;
       }
@@ -38,6 +43,46 @@ const app = {
       });
     }
 
+    thisApp.mainLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        /* get page id from href attribute */
+        const id = link.getAttribute('href').replace('#', '');
+        const cart = document.querySelector(select.containerOf.cart);
+        /* run thisApp.activatePage with that id */
+
+        if (id === 'order') {
+
+          cart.classList.add(classNames.cart.wrapperVisible);
+        }
+
+
+        thisApp.activatePage(id);
+
+        thisApp.mainNav.classList.add(classNames.pages.active);
+
+        /* change URL hash */
+        window.location.hash = '#/' + id;
+
+      });
+    });
+
+    thisApp.logoLink.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const id = this.logoLink.getAttribute('href').replace('#','');
+      const cart = document.querySelector(select.containerOf.cart);
+
+      if (id === 'main') {
+        cart.classList.remove(classNames.cart.wrapperVisible);
+      }
+      thisApp.activatePage(id);
+
+      thisApp.mainNav.classList.remove('active');
+
+      window.location.hash = `#/${id}`;
+    });
   },
 
 

@@ -1,5 +1,5 @@
 .cart {
-  display: none;
+  opacity: 0;
   position: absolute;
   width: 300px; // CODE CHANGED
   right: 0;
@@ -17,7 +17,10 @@
       @include accordion-open();
       padding: ($base-size * 1.5) 0 0 0;
     }
+  }
 
+  &.visible {
+    opacity: 1;
   }
 
   &__summary {
