@@ -57,7 +57,6 @@ const app = {
           cart.classList.add(classNames.cart.wrapperVisible);
         }
 
-
         thisApp.activatePage(id);
 
         thisApp.mainNav.classList.add(classNames.pages.active);
